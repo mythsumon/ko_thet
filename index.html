@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;600;700&family=Padauk:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" defer></script>
 <style>
   :root {
     --bg: #f5f6f8;
@@ -1182,6 +1183,39 @@
     .job-viz { display: none !important; }
   }
 
+  /* ---------- PDF export mode ---------- */
+  body.pdf-export .lang-switcher,
+  body.pdf-export .welcome-hero,
+  body.pdf-export .thank-you,
+  body.pdf-export .job-tabs,
+  body.pdf-export .job-viz,
+  body.pdf-export .bg-layer,
+  body.pdf-export .bg-gear-2,
+  body.pdf-export .crane,
+  body.pdf-export .floating-tools,
+  body.pdf-export .sparkle,
+  body.pdf-export .profile-heart,
+  body.pdf-export .sidebar-footer .mini-scene,
+  body.pdf-export .pulse-dot { display: none !important; }
+
+  body.pdf-export .wrapper {
+    box-shadow: none;
+    margin: 0;
+    border-radius: 0;
+    max-width: none;
+  }
+
+  body.pdf-export .job-panel {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    margin-bottom: 14px;
+    animation: none !important;
+    padding: 14px 18px;
+  }
+
+  body.pdf-export .section { opacity: 1 !important; transform: none !important; }
+  body.pdf-export { background: #fff; }
+
   /* ---------- Bio / About block ---------- */
   .bio-text {
     font-size: 15px;
@@ -1982,9 +2016,52 @@
       });
     });
 
-    // Download CV -> open print dialog (user can Save as PDF)
-    document.getElementById('viewCvBtn')?.addEventListener('click', () => {
-      window.print();
+    // Download CV -> generate and download a real PDF file
+    const cvBtn = document.getElementById('viewCvBtn');
+    cvBtn?.addEventListener('click', async () => {
+      const labelSpan = cvBtn.querySelector('span[data-i18n="btn_cv"]');
+      const originalLabel = labelSpan ? labelSpan.textContent : '';
+
+      // Fallback if html2pdf library failed to load
+      if (typeof html2pdf === 'undefined') {
+        window.print();
+        return;
+      }
+
+      if (labelSpan) labelSpan.textContent = '...';
+      cvBtn.disabled = true;
+
+      document.body.classList.add('pdf-export');
+
+      // Reveal all job panels so the full work history is captured
+      const panels = document.querySelectorAll('.job-panel');
+      const prevActive = Array.from(panels).findIndex((p) => p.classList.contains('active'));
+      panels.forEach((p) => p.classList.add('active'));
+
+      // Give the browser a moment to apply styles
+      await new Promise((r) => setTimeout(r, 150));
+
+      const element = document.querySelector('.wrapper');
+      const opt = {
+        margin:       [10, 10, 10, 10],
+        filename:     'Thet_Htet_Soe_CV.pdf',
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2, useCORS: true, logging: false, backgroundColor: '#ffffff' },
+        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
+        pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
+      };
+
+      try {
+        await html2pdf().set(opt).from(element).save();
+      } catch (err) {
+        console.error('PDF generation failed, falling back to print dialog', err);
+        window.print();
+      } finally {
+        document.body.classList.remove('pdf-export');
+        panels.forEach((p, i) => p.classList.toggle('active', i === (prevActive >= 0 ? prevActive : 0)));
+        if (labelSpan) labelSpan.textContent = originalLabel;
+        cvBtn.disabled = false;
+      }
     });
 
     // ---------- Work Experience tabs ----------
