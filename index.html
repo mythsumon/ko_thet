@@ -229,6 +229,154 @@
     color: var(--sidebar-text);
     padding: 40px 30px;
     position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ---------- Availability status ---------- */
+  .availability {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: rgba(74, 222, 128, 0.08);
+    border: 1px solid rgba(74, 222, 128, 0.2);
+    border-radius: 10px;
+    font-size: 13px;
+    color: #d1fae5;
+  }
+
+  .pulse-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #4ade80;
+    position: relative;
+    flex-shrink: 0;
+    box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.7);
+    animation: pulse-ring 2s ease-out infinite;
+  }
+
+  @keyframes pulse-ring {
+    0%   { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.7); }
+    70%  { box-shadow: 0 0 0 10px rgba(74, 222, 128, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0); }
+  }
+
+  /* ---------- Language proficiency bars ---------- */
+  .lang-bar {
+    margin-bottom: 14px;
+  }
+
+  .lang-bar:last-child { margin-bottom: 0; }
+
+  .lang-bar-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12.5px;
+    color: var(--sidebar-text);
+    margin-bottom: 6px;
+  }
+
+  .lang-bar-label .level {
+    color: var(--sidebar-muted);
+    font-size: 11px;
+    letter-spacing: 0.5px;
+  }
+
+  .lang-bar-track {
+    height: 5px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 999px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .lang-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent) 0%, #ffd24a 100%);
+    border-radius: 999px;
+    width: 0;
+    animation: fill-bar 1.4s cubic-bezier(0.2, 0.8, 0.2, 1) 0.4s forwards;
+    position: relative;
+  }
+
+  .lang-bar-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 20px;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4));
+    animation: shimmer 2.5s ease-in-out infinite 1.8s;
+  }
+
+  @keyframes fill-bar {
+    to { width: var(--w); }
+  }
+
+  @keyframes shimmer {
+    0%, 100% { opacity: 0; transform: translateX(0); }
+    50%      { opacity: 1; transform: translateX(-4px); }
+  }
+
+  /* ---------- Sidebar footer ---------- */
+  .sidebar-footer {
+    margin-top: auto;
+    padding-top: 32px;
+    text-align: center;
+    color: var(--sidebar-muted);
+    font-size: 11.5px;
+    letter-spacing: 0.5px;
+  }
+
+  .sidebar-footer .mini-scene {
+    width: 100%;
+    max-width: 180px;
+    height: 70px;
+    margin: 0 auto 14px;
+    display: block;
+  }
+
+  .sidebar-footer .mini-scene .hat-bounce {
+    transform-origin: 100px 60px;
+    animation: hat-bounce 1.8s ease-in-out infinite;
+  }
+
+  .sidebar-footer .mini-scene .gear-small {
+    transform-origin: center;
+    transform-box: fill-box;
+    animation: spin 6s linear infinite;
+  }
+
+  .sidebar-footer .mini-scene .gear-small.reverse {
+    animation: spin 8s linear infinite reverse;
+  }
+
+  @keyframes hat-bounce {
+    0%, 100% { transform: translateY(0) rotate(-5deg); }
+    50%      { transform: translateY(-4px) rotate(5deg); }
+  }
+
+  .sidebar-footer .sig-heart {
+    color: #ff6b8a;
+    display: inline-block;
+    animation: heartbeat 1.4s ease-in-out infinite;
+  }
+
+  .sidebar-footer hr {
+    border: none;
+    border-top: 1px dashed rgba(255, 255, 255, 0.1);
+    margin-bottom: 18px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pulse-dot, .lang-bar-fill, .lang-bar-fill::after,
+    .mini-scene .hat-bounce, .mini-scene .gear-small, .sig-heart {
+      animation: none !important;
+    }
+    .lang-bar-fill { width: var(--w) !important; }
   }
 
   .profile {
@@ -1362,6 +1510,65 @@
           <li data-i18n="skill_teamwork">Teamwork</li>
         </ul>
       </div>
+
+      <div class="sidebar-section">
+        <h3 class="sidebar-title" data-i18n="label_status">Status</h3>
+        <div class="availability">
+          <span class="pulse-dot" aria-hidden="true"></span>
+          <span data-i18n="availability_text">Available for Work</span>
+        </div>
+      </div>
+
+      <div class="sidebar-section">
+        <h3 class="sidebar-title" data-i18n="card_languages">Languages</h3>
+        <div class="lang-bar">
+          <div class="lang-bar-label">
+            <span data-i18n="lang_burmese">Burmese</span>
+            <span class="level" data-i18n="lang_fluent">Fluent</span>
+          </div>
+          <div class="lang-bar-track"><div class="lang-bar-fill" style="--w: 100%"></div></div>
+        </div>
+        <div class="lang-bar">
+          <div class="lang-bar-label">
+            <span data-i18n="lang_english">English</span>
+            <span class="level" data-i18n="lang_basic">Basic</span>
+          </div>
+          <div class="lang-bar-track"><div class="lang-bar-fill" style="--w: 45%"></div></div>
+        </div>
+        <div class="lang-bar">
+          <div class="lang-bar-label">
+            <span data-i18n="lang_chinese">Chinese</span>
+            <span class="level" data-i18n="lang_basic">Basic</span>
+          </div>
+          <div class="lang-bar-track"><div class="lang-bar-fill" style="--w: 40%"></div></div>
+        </div>
+      </div>
+
+      <div class="sidebar-footer">
+        <hr/>
+        <svg class="mini-scene" viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <!-- Small gears on the sides -->
+          <g class="gear-small" transform="translate(30 40)">
+            <path fill="#c08457" fill-opacity="0.5" d="M0 -12 L3 -9 L8 -10 L8 -5 L12 -3 L9 0 L12 3 L8 5 L8 10 L3 9 L0 12 L-3 9 L-8 10 L-8 5 L-12 3 L-9 0 L-12 -3 L-8 -5 L-8 -10 L-3 -9 Z"/>
+            <circle cx="0" cy="0" r="4" fill="none" stroke="#c08457" stroke-opacity="0.7" stroke-width="1.2"/>
+          </g>
+          <g class="gear-small reverse" transform="translate(170 40)">
+            <path fill="#ffd24a" fill-opacity="0.5" d="M0 -10 L2.5 -7.5 L7 -8 L7 -4 L10 -2.5 L7.5 0 L10 2.5 L7 4 L7 8 L2.5 7.5 L0 10 L-2.5 7.5 L-7 8 L-7 4 L-10 2.5 L-7.5 0 L-10 -2.5 L-7 -4 L-7 -8 L-2.5 -7.5 Z"/>
+            <circle cx="0" cy="0" r="3" fill="none" stroke="#ffd24a" stroke-opacity="0.7" stroke-width="1.2"/>
+          </g>
+          <!-- Bouncing hard hat in center -->
+          <g class="hat-bounce">
+            <path d="M80 55 Q80 40 100 38 Q120 40 120 55 Z" fill="#ffd24a"/>
+            <rect x="76" y="53" width="48" height="5" rx="2" fill="#e8a900"/>
+            <path d="M98 38 Q100 36 102 38 L102 55 L98 55 Z" fill="#c98b00" opacity="0.5"/>
+          </g>
+        </svg>
+        <p>
+          Built with <span class="sig-heart">♥</span>
+          <br/>
+          <span data-i18n="sig_name">by Thet Htet Soe</span>
+        </p>
+      </div>
     </aside>
 
     <!-- Main -->
@@ -1863,7 +2070,10 @@
         pd_single: "Single",
         thanks_title: "Thanks for visiting!",
         thanks_text: "I'd love to hear from you. If you have an opportunity or just want to say hi, please don't hesitate to get in touch.",
-        btn_touch: "Get in Touch"
+        btn_touch: "Get in Touch",
+        label_status: "Status",
+        availability_text: "Available for Work",
+        sig_name: "by Thet Htet Soe"
       },
       zh: {
         role: "建筑工人",
@@ -1925,7 +2135,10 @@
         pd_single: "未婚",
         thanks_title: "感谢您的到访！",
         thanks_text: "我很期待收到您的消息。如果您有机会或只是想打个招呼，请随时与我联系。",
-        btn_touch: "联系我"
+        btn_touch: "联系我",
+        label_status: "状态",
+        availability_text: "可接受工作",
+        sig_name: "由 Thet Htet Soe 制作"
       },
       ko: {
         role: "건설 노동자",
@@ -1987,7 +2200,10 @@
         pd_single: "미혼",
         thanks_title: "방문해 주셔서 감사합니다!",
         thanks_text: "연락 주시면 정말 감사하겠습니다. 기회가 있거나 안부를 전하고 싶으시다면 언제든 편하게 연락주세요.",
-        btn_touch: "연락하기"
+        btn_touch: "연락하기",
+        label_status: "상태",
+        availability_text: "업무 가능",
+        sig_name: "Thet Htet Soe 제작"
       },
       my: {
         role: "ဆောက်လုပ်ရေးလုပ်သား",
@@ -2049,7 +2265,10 @@
         pd_single: "လူပျို",
         thanks_title: "လာရောက်လည်ပတ်သည့်အတွက် ကျေးဇူးတင်ပါသည်!",
         thanks_text: "ကျွန်ုပ်ထံ ဆက်သွယ်မှုကို ရရှိလိုပါသည်။ အလုပ်အခွင့်အလမ်းရှိသည်ဖြစ်စေ၊ နှုတ်ဆက်ချင်သည်ဖြစ်စေ လွတ်လပ်စွာ ဆက်သွယ်ပါ။",
-        btn_touch: "ဆက်သွယ်ရန်"
+        btn_touch: "ဆက်သွယ်ရန်",
+        label_status: "အခြေအနေ",
+        availability_text: "အလုပ်လုပ်ရန် အဆင်သင့်",
+        sig_name: "Thet Htet Soe မှ ပြုလုပ်သည်"
       }
     };
 
