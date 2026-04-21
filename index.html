@@ -6,7 +6,7 @@
 <title>Thet Htet Soe — Construction Worker</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;600;700&family=Padauk:wght@400;700&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #f5f6f8;
@@ -33,6 +33,61 @@
     -webkit-font-smoothing: antialiased;
     position: relative;
     overflow-x: hidden;
+  }
+
+  body[data-lang="zh"] { font-family: 'Noto Sans SC', 'Inter', system-ui, sans-serif; }
+  body[data-lang="ko"] { font-family: 'Noto Sans KR', 'Inter', system-ui, sans-serif; }
+  body[data-lang="my"] { font-family: 'Padauk', 'Inter', system-ui, sans-serif; line-height: 1.85; }
+
+  /* ---------- Language switcher ---------- */
+  .lang-switcher {
+    position: absolute;
+    top: 22px;
+    right: 28px;
+    display: flex;
+    gap: 4px;
+    z-index: 10;
+    background: var(--bg);
+    padding: 4px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+  }
+
+  .lang-btn {
+    padding: 5px 11px;
+    background: transparent;
+    border: none;
+    border-radius: 999px;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    letter-spacing: 0.3px;
+  }
+
+  .lang-btn:hover {
+    color: var(--text);
+  }
+
+  .lang-btn.active {
+    background: var(--accent);
+    color: #fff;
+    box-shadow: 0 2px 6px rgba(192, 132, 87, 0.3);
+  }
+
+  @media (max-width: 640px) {
+    .lang-switcher {
+      top: 14px;
+      right: 14px;
+      padding: 3px;
+    }
+    .lang-btn { padding: 4px 8px; font-size: 11px; }
+  }
+
+  @media print {
+    .lang-switcher { display: none !important; }
   }
 
   /* ---------- Animated Construction Background ---------- */
@@ -1028,11 +1083,11 @@
           <span class="profile-heart h3" aria-hidden="true">♥</span>
         </span>
         <h1>Thet Htet Soe</h1>
-        <p class="role">Construction Worker</p>
+        <p class="role" data-i18n="role">Construction Worker</p>
       </div>
 
       <div class="sidebar-section">
-        <h3 class="sidebar-title">Contact</h3>
+        <h3 class="sidebar-title" data-i18n="label_contact">Contact</h3>
 
         <div class="contact-item">
           <span class="icon">
@@ -1064,39 +1119,46 @@
       </div>
 
       <div class="sidebar-section">
-        <h3 class="sidebar-title">Skills</h3>
+        <h3 class="sidebar-title" data-i18n="label_skills">Skills</h3>
         <ul class="skills-list">
-          <li>Lifting & Rigging Operations</li>
-          <li>Site Supervision</li>
-          <li>Electrical Assistance</li>
-          <li>Wall Painting & Finishing</li>
-          <li>Safety Awareness</li>
-          <li>Teamwork</li>
+          <li data-i18n="skill_lifting">Lifting &amp; Rigging Operations</li>
+          <li data-i18n="skill_supervision">Site Supervision</li>
+          <li data-i18n="skill_electrical">Electrical Assistance</li>
+          <li data-i18n="skill_painting">Wall Painting &amp; Finishing</li>
+          <li data-i18n="skill_safety">Safety Awareness</li>
+          <li data-i18n="skill_teamwork">Teamwork</li>
         </ul>
       </div>
     </aside>
 
     <!-- Main -->
     <main class="main">
+      <div class="lang-switcher" role="group" aria-label="Language">
+        <button class="lang-btn active" data-lang-btn="en" type="button">EN</button>
+        <button class="lang-btn" data-lang-btn="zh" type="button">中文</button>
+        <button class="lang-btn" data-lang-btn="ko" type="button">한국어</button>
+        <button class="lang-btn" data-lang-btn="my" type="button">မြန်မာ</button>
+      </div>
+
       <header class="header">
         <h2>Thet Htet Soe</h2>
-        <p>Construction Worker</p>
+        <p data-i18n="role">Construction Worker</p>
       </header>
 
       <!-- Welcome Hero -->
       <div class="welcome-hero">
         <div class="welcome-text">
-          <span class="greeting"><span class="wave">👋</span> Welcome</span>
-          <h3>Thanks for stopping by — feel free to connect!</h3>
-          <p>Browse my CV below. If you have a great job opportunity, I'd love to hear from you.</p>
+          <span class="greeting"><span class="wave">👋</span> <span data-i18n="badge_welcome">Welcome</span></span>
+          <h3 data-i18n="welcome_title">Thanks for stopping by — feel free to connect!</h3>
+          <p data-i18n="welcome_subtitle">Browse my CV below. If you have a great job opportunity, I'd love to hear from you.</p>
           <div class="welcome-actions">
             <a class="btn btn-primary" href="mailto:thethtetsoe751@gmail.com?subject=Job%20Opportunity%20for%20Thet%20Htet%20Soe">
               <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-              Contact Me
+              <span data-i18n="btn_contact">Contact Me</span>
             </a>
             <button class="btn btn-secondary" id="viewCvBtn" type="button">
               <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg>
-              Download CV
+              <span data-i18n="btn_cv">Download CV</span>
             </button>
           </div>
         </div>
@@ -1174,8 +1236,8 @@
 
       <!-- Bio / About Me -->
       <section class="section" id="bio">
-        <h3 class="section-title">About Me <span class="sparkle">✦</span><span class="sparkle s3">✦</span></h3>
-        <p class="bio-text">
+        <h3 class="section-title"><span data-i18n="sec_about">About Me</span> <span class="sparkle">✦</span><span class="sparkle s3">✦</span></h3>
+        <p class="bio-text" data-i18n-html="bio">
           I am a <strong>hardworking and disciplined</strong> individual with a strong willingness
           to learn new skills and take on challenges. I am not afraid of trying new things and
           always eager to gain knowledge and improve myself. I work well under instruction,
@@ -1186,53 +1248,53 @@
 
       <!-- Work Experience -->
       <section class="section" id="experience">
-        <h3 class="section-title">Work Experience <span class="sparkle">✦</span><span class="sparkle s2">✦</span></h3>
+        <h3 class="section-title"><span data-i18n="sec_experience">Work Experience</span> <span class="sparkle">✦</span><span class="sparkle s2">✦</span></h3>
         <div class="timeline">
 
           <div class="timeline-item">
-            <h4>Construction Worker — DMJC Construction Company</h4>
-            <p class="meta">2025 – Present</p>
+            <h4 data-i18n="job1_title">Construction Worker — DMJC Construction Company</h4>
+            <p class="meta" data-i18n="job1_meta">2025 – Present</p>
             <ul>
-              <li>Perform general construction work</li>
-              <li>Assist in lifting operations</li>
-              <li>Wall painting and finishing</li>
-              <li>Support site activities</li>
+              <li data-i18n="job1_b1">Perform general construction work</li>
+              <li data-i18n="job1_b2">Assist in lifting operations</li>
+              <li data-i18n="job1_b3">Wall painting and finishing</li>
+              <li data-i18n="job1_b4">Support site activities</li>
             </ul>
           </div>
 
           <div class="timeline-item">
-            <h4>Warehouse Electrical Assistant</h4>
-            <p class="meta">2024 – 2024</p>
+            <h4 data-i18n="job2_title">Warehouse Electrical Assistant</h4>
+            <p class="meta" data-i18n="job2_meta">2024 – 2024</p>
             <ul>
-              <li>Assist electrical installation</li>
-              <li>Prepare tools and materials</li>
+              <li data-i18n="job2_b1">Assist electrical installation</li>
+              <li data-i18n="job2_b2">Prepare tools and materials</li>
             </ul>
           </div>
 
           <div class="timeline-item">
-            <h4>Government Staff — Forest Department</h4>
-            <p class="meta">2018 – 2020</p>
+            <h4 data-i18n="job3_title">Government Staff — Forest Department</h4>
+            <p class="meta" data-i18n="job3_meta">2018 – 2020</p>
             <ul>
-              <li>Field operations</li>
-              <li>Environmental maintenance</li>
+              <li data-i18n="job3_b1">Field operations</li>
+              <li data-i18n="job3_b2">Environmental maintenance</li>
             </ul>
           </div>
 
           <div class="timeline-item">
-            <h4>Minding Supervisor — Construction</h4>
-            <p class="meta">2015 – 2017</p>
+            <h4 data-i18n="job4_title">Minding Supervisor — Construction</h4>
+            <p class="meta" data-i18n="job4_meta">2015 – 2017</p>
             <ul>
-              <li>Supervise workers</li>
-              <li>Assign tasks</li>
+              <li data-i18n="job4_b1">Supervise workers</li>
+              <li data-i18n="job4_b2">Assign tasks</li>
             </ul>
           </div>
 
           <div class="timeline-item">
-            <h4>Electric Shop Sales Assistant — Loikaw</h4>
-            <p class="meta">2013 – 2015</p>
+            <h4 data-i18n="job5_title">Electric Shop Sales Assistant — Loikaw</h4>
+            <p class="meta" data-i18n="job5_meta">2013 – 2015</p>
             <ul>
-              <li>Customer service</li>
-              <li>Product recommendations</li>
+              <li data-i18n="job5_b1">Customer service</li>
+              <li data-i18n="job5_b2">Product recommendations</li>
             </ul>
           </div>
 
@@ -1241,35 +1303,35 @@
 
       <!-- Education -->
       <section class="section" id="education">
-        <h3 class="section-title">Education <span class="sparkle">✦</span><span class="sparkle s3">✦</span></h3>
+        <h3 class="section-title"><span data-i18n="sec_education">Education</span> <span class="sparkle">✦</span><span class="sparkle s3">✦</span></h3>
         <div class="timeline">
           <div class="timeline-item">
-            <h4>Physics Major — Loikaw University</h4>
-            <p class="meta">2014 – 2018</p>
+            <h4 data-i18n="edu1_title">Physics Major — Loikaw University</h4>
+            <p class="meta" data-i18n="edu1_meta">2014 – 2018</p>
           </div>
           <div class="timeline-item">
-            <h4>Lifting Certificate — Singapore</h4>
-            <p class="meta">Certified</p>
+            <h4 data-i18n="edu2_title">Lifting Certificate — Singapore</h4>
+            <p class="meta" data-i18n="edu2_meta">Certified</p>
           </div>
         </div>
       </section>
 
       <!-- About -->
       <section class="section" id="about">
-        <h3 class="section-title">Personal Details <span class="sparkle">♥</span><span class="sparkle s2">✦</span></h3>
+        <h3 class="section-title"><span data-i18n="sec_personal">Personal Details</span> <span class="sparkle">♥</span><span class="sparkle s2">✦</span></h3>
         <div class="about-grid">
           <div class="info-card">
-            <h5>Languages</h5>
-            <p><strong>Burmese</strong> Fluent</p>
-            <p><strong>English</strong> Basic</p>
-            <p><strong>Chinese</strong> Basic</p>
+            <h5 data-i18n="card_languages">Languages</h5>
+            <p><strong data-i18n="lang_burmese">Burmese</strong> <span data-i18n="lang_fluent">Fluent</span></p>
+            <p><strong data-i18n="lang_english">English</strong> <span data-i18n="lang_basic">Basic</span></p>
+            <p><strong data-i18n="lang_chinese">Chinese</strong> <span data-i18n="lang_basic">Basic</span></p>
           </div>
 
           <div class="info-card">
-            <h5>Personal Info</h5>
-            <p><strong>Nationality</strong> Myanmar</p>
-            <p><strong>Date of Birth</strong> 20-12-1996</p>
-            <p><strong>Marital Status</strong> Single</p>
+            <h5 data-i18n="card_personal">Personal Info</h5>
+            <p><strong data-i18n="pd_nationality">Nationality</strong> <span data-i18n="pd_myanmar">Myanmar</span></p>
+            <p><strong data-i18n="pd_dob">Date of Birth</strong> 20-12-1996</p>
+            <p><strong data-i18n="pd_marital">Marital Status</strong> <span data-i18n="pd_single">Single</span></p>
           </div>
         </div>
       </section>
@@ -1319,14 +1381,14 @@
         </svg>
 
         <div>
-          <h3>Thanks for visiting! <span class="heart-inline">♥</span></h3>
-          <p>
+          <h3><span data-i18n="thanks_title">Thanks for visiting!</span> <span class="heart-inline">♥</span></h3>
+          <p data-i18n="thanks_text">
             I'd love to hear from you. If you have an opportunity or just want to say hi,
             please don't hesitate to get in touch.
           </p>
           <a class="btn btn-primary" href="mailto:thethtetsoe751@gmail.com?subject=Hello%20Thet%20Htet%20Soe">
             <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-            Get in Touch
+            <span data-i18n="btn_touch">Get in Touch</span>
           </a>
         </div>
 
@@ -1367,6 +1429,288 @@
     document.getElementById('viewCvBtn')?.addEventListener('click', () => {
       window.print();
     });
+
+    // ---------- i18n ----------
+    const translations = {
+      en: {
+        role: "Construction Worker",
+        label_contact: "Contact",
+        label_skills: "Skills",
+        skill_lifting: "Lifting & Rigging Operations",
+        skill_supervision: "Site Supervision",
+        skill_electrical: "Electrical Assistance",
+        skill_painting: "Wall Painting & Finishing",
+        skill_safety: "Safety Awareness",
+        skill_teamwork: "Teamwork",
+        badge_welcome: "Welcome",
+        welcome_title: "Thanks for stopping by — feel free to connect!",
+        welcome_subtitle: "Browse my CV below. If you have a great job opportunity, I'd love to hear from you.",
+        btn_contact: "Contact Me",
+        btn_cv: "Download CV",
+        sec_about: "About Me",
+        sec_experience: "Work Experience",
+        sec_education: "Education",
+        sec_personal: "Personal Details",
+        bio: "I am a <strong>hardworking and disciplined</strong> individual with a strong willingness to learn new skills and take on challenges. I am not afraid of trying new things and always eager to gain knowledge and improve myself. I work well under instruction, follow rules strictly, and maintain good relationships with supervisors and colleagues. I am known for being <strong>respectful, reliable, and highly disciplined</strong> in the workplace.",
+        job1_title: "Construction Worker — DMJC Construction Company",
+        job1_meta: "2025 – Present",
+        job1_b1: "Perform general construction work",
+        job1_b2: "Assist in lifting operations",
+        job1_b3: "Wall painting and finishing",
+        job1_b4: "Support site activities",
+        job2_title: "Warehouse Electrical Assistant",
+        job2_meta: "2024 – 2024",
+        job2_b1: "Assist electrical installation",
+        job2_b2: "Prepare tools and materials",
+        job3_title: "Government Staff — Forest Department",
+        job3_meta: "2018 – 2020",
+        job3_b1: "Field operations",
+        job3_b2: "Environmental maintenance",
+        job4_title: "Minding Supervisor — Construction",
+        job4_meta: "2015 – 2017",
+        job4_b1: "Supervise workers",
+        job4_b2: "Assign tasks",
+        job5_title: "Electric Shop Sales Assistant — Loikaw",
+        job5_meta: "2013 – 2015",
+        job5_b1: "Customer service",
+        job5_b2: "Product recommendations",
+        edu1_title: "Physics Major — Loikaw University",
+        edu1_meta: "2014 – 2018",
+        edu2_title: "Lifting Certificate — Singapore",
+        edu2_meta: "Certified",
+        card_languages: "Languages",
+        lang_burmese: "Burmese",
+        lang_english: "English",
+        lang_chinese: "Chinese",
+        lang_fluent: "Fluent",
+        lang_basic: "Basic",
+        card_personal: "Personal Info",
+        pd_nationality: "Nationality",
+        pd_myanmar: "Myanmar",
+        pd_dob: "Date of Birth",
+        pd_marital: "Marital Status",
+        pd_single: "Single",
+        thanks_title: "Thanks for visiting!",
+        thanks_text: "I'd love to hear from you. If you have an opportunity or just want to say hi, please don't hesitate to get in touch.",
+        btn_touch: "Get in Touch"
+      },
+      zh: {
+        role: "建筑工人",
+        label_contact: "联系方式",
+        label_skills: "技能",
+        skill_lifting: "吊装与索具作业",
+        skill_supervision: "现场监督",
+        skill_electrical: "电气辅助",
+        skill_painting: "墙面涂装与装修",
+        skill_safety: "安全意识",
+        skill_teamwork: "团队合作",
+        badge_welcome: "欢迎",
+        welcome_title: "感谢您的到访 — 欢迎随时联系我！",
+        welcome_subtitle: "请浏览下方的简历。如果您有好的工作机会，欢迎与我联系。",
+        btn_contact: "联系我",
+        btn_cv: "下载简历",
+        sec_about: "关于我",
+        sec_experience: "工作经历",
+        sec_education: "教育背景",
+        sec_personal: "个人信息",
+        bio: "我是一个<strong>勤奋自律</strong>的人，乐于学习新技能并迎接挑战。我不害怕尝试新事物，始终渴望获取知识并提升自己。我能很好地按指示工作，严格遵守规定，并与上级和同事保持良好关系。在工作中，我以<strong>尊重他人、值得信赖、高度自律</strong>而著称。",
+        job1_title: "建筑工人 — DMJC 建筑公司",
+        job1_meta: "2025 年 – 至今",
+        job1_b1: "从事一般建筑工作",
+        job1_b2: "协助吊装作业",
+        job1_b3: "墙面涂装与装修",
+        job1_b4: "支持现场施工活动",
+        job2_title: "仓库电气助理",
+        job2_meta: "2024 – 2024",
+        job2_b1: "协助电气安装",
+        job2_b2: "准备工具和材料",
+        job3_title: "政府职员 — 林业部",
+        job3_meta: "2018 – 2020",
+        job3_b1: "野外作业",
+        job3_b2: "环境维护",
+        job4_title: "监工 — 建筑",
+        job4_meta: "2015 – 2017",
+        job4_b1: "监督工人",
+        job4_b2: "分配任务",
+        job5_title: "电器店销售助理 — 垒固",
+        job5_meta: "2013 – 2015",
+        job5_b1: "客户服务",
+        job5_b2: "产品推荐",
+        edu1_title: "物理学专业 — 垒固大学",
+        edu1_meta: "2014 – 2018",
+        edu2_title: "吊装证书 — 新加坡",
+        edu2_meta: "已认证",
+        card_languages: "语言",
+        lang_burmese: "缅甸语",
+        lang_english: "英语",
+        lang_chinese: "中文",
+        lang_fluent: "流利",
+        lang_basic: "基础",
+        card_personal: "个人信息",
+        pd_nationality: "国籍",
+        pd_myanmar: "缅甸",
+        pd_dob: "出生日期",
+        pd_marital: "婚姻状况",
+        pd_single: "未婚",
+        thanks_title: "感谢您的到访！",
+        thanks_text: "我很期待收到您的消息。如果您有机会或只是想打个招呼，请随时与我联系。",
+        btn_touch: "联系我"
+      },
+      ko: {
+        role: "건설 노동자",
+        label_contact: "연락처",
+        label_skills: "기술",
+        skill_lifting: "리프팅 및 리깅 작업",
+        skill_supervision: "현장 감독",
+        skill_electrical: "전기 보조",
+        skill_painting: "벽 페인팅 및 마감",
+        skill_safety: "안전 의식",
+        skill_teamwork: "팀워크",
+        badge_welcome: "환영합니다",
+        welcome_title: "방문해 주셔서 감사합니다 — 언제든 연락주세요!",
+        welcome_subtitle: "아래에서 제 이력서를 확인해 보세요. 좋은 취업 기회가 있다면 연락 부탁드립니다.",
+        btn_contact: "연락하기",
+        btn_cv: "이력서 다운로드",
+        sec_about: "소개",
+        sec_experience: "경력",
+        sec_education: "학력",
+        sec_personal: "개인 정보",
+        bio: "저는 새로운 기술을 배우고 도전에 맞서려는 강한 의지를 가진 <strong>성실하고 규율 있는</strong> 사람입니다. 새로운 것을 시도하는 것을 두려워하지 않으며, 지식을 얻고 자신을 발전시키기를 항상 열망합니다. 지시에 따라 잘 일하고, 규칙을 엄격히 지키며, 상사 및 동료들과 좋은 관계를 유지합니다. 저는 직장에서 <strong>예의 바르고, 신뢰할 수 있으며, 매우 규율 있는</strong> 사람으로 알려져 있습니다.",
+        job1_title: "건설 노동자 — DMJC 건설 회사",
+        job1_meta: "2025 – 현재",
+        job1_b1: "일반 건설 작업 수행",
+        job1_b2: "리프팅 작업 보조",
+        job1_b3: "벽 페인팅 및 마감",
+        job1_b4: "현장 업무 지원",
+        job2_title: "창고 전기 보조원",
+        job2_meta: "2024 – 2024",
+        job2_b1: "전기 설치 보조",
+        job2_b2: "도구 및 자재 준비",
+        job3_title: "공무원 — 산림청",
+        job3_meta: "2018 – 2020",
+        job3_b1: "현장 업무",
+        job3_b2: "환경 유지 관리",
+        job4_title: "감독 — 건설",
+        job4_meta: "2015 – 2017",
+        job4_b1: "작업자 감독",
+        job4_b2: "업무 배정",
+        job5_title: "전기 상점 판매 보조 — 로이코",
+        job5_meta: "2013 – 2015",
+        job5_b1: "고객 서비스",
+        job5_b2: "제품 추천",
+        edu1_title: "물리학 전공 — 로이코 대학교",
+        edu1_meta: "2014 – 2018",
+        edu2_title: "리프팅 자격증 — 싱가포르",
+        edu2_meta: "인증됨",
+        card_languages: "언어",
+        lang_burmese: "버마어",
+        lang_english: "영어",
+        lang_chinese: "중국어",
+        lang_fluent: "유창함",
+        lang_basic: "기초",
+        card_personal: "개인 정보",
+        pd_nationality: "국적",
+        pd_myanmar: "미얀마",
+        pd_dob: "생년월일",
+        pd_marital: "결혼 상태",
+        pd_single: "미혼",
+        thanks_title: "방문해 주셔서 감사합니다!",
+        thanks_text: "연락 주시면 정말 감사하겠습니다. 기회가 있거나 안부를 전하고 싶으시다면 언제든 편하게 연락주세요.",
+        btn_touch: "연락하기"
+      },
+      my: {
+        role: "ဆောက်လုပ်ရေးလုပ်သား",
+        label_contact: "ဆက်သွယ်ရန်",
+        label_skills: "ကျွမ်းကျင်မှုများ",
+        skill_lifting: "မြှောက်ယူခြင်းနှင့် ရိဂ်ဂင်လုပ်ငန်း",
+        skill_supervision: "လုပ်ငန်းခွင်ကြီးကြပ်ရေး",
+        skill_electrical: "လျှပ်စစ်အကူအညီ",
+        skill_painting: "နံရံဆေးသုတ်ခြင်းနှင့် အချောထည်",
+        skill_safety: "လုံခြုံရေးသတိပြုမှု",
+        skill_teamwork: "အဖွဲ့လိုက်လုပ်ဆောင်ခြင်း",
+        badge_welcome: "ကြိုဆိုပါသည်",
+        welcome_title: "လာရောက်လည်ပတ်သည့်အတွက် ကျေးဇူးတင်ပါသည် — လွတ်လပ်စွာ ဆက်သွယ်ပါ!",
+        welcome_subtitle: "အောက်ပါ CV ကိုကြည့်ရှုပါ။ ကောင်းမွန်သော အလုပ်အခွင့်အလမ်းရှိပါက ကျွန်ုပ်ကို ဆက်သွယ်ပါ။",
+        btn_contact: "ဆက်သွယ်ရန်",
+        btn_cv: "CV ဒေါင်းလုဒ်",
+        sec_about: "ကျွန်ုပ်အကြောင်း",
+        sec_experience: "အလုပ်အတွေ့အကြုံ",
+        sec_education: "ပညာရေး",
+        sec_personal: "ကိုယ်ရေးအချက်အလက်",
+        bio: "ကျွန်ုပ်သည် <strong>ကြိုးစားလုပ်ကိုင်ပြီး စည်းကမ်းရှိသော</strong> လူတစ်ဦးဖြစ်ပြီး၊ စွမ်းရည်သစ်များကို လေ့လာရန်နှင့် စိန်ခေါ်မှုများကို ရင်ဆိုင်ရန် ဆန္ဒပြင်းပြပါသည်။ အသစ်အဆန်းများကို စမ်းသပ်ရန် မကြောက်ပါ၊ အမြဲတမ်း အသိပညာများရရှိရန်နှင့် ကိုယ့်ကိုယ်ကို တိုးတက်စေရန် ဆန္ဒပြင်းပြပါသည်။ ညွှန်ကြားချက်အတိုင်း ကောင်းစွာလုပ်ဆောင်ပြီး၊ စည်းကမ်းများကို တိကျစွာလိုက်နာကာ အထက်အရာရှိများနှင့် လုပ်ဖော်ကိုင်ဖက်များနှင့် ကောင်းမွန်သောဆက်ဆံရေးကို ထိန်းသိမ်းပါသည်။ အလုပ်ခွင်တွင် <strong>ရိုသေလေးစားမှု၊ ယုံကြည်စိတ်ချရမှုနှင့် မြင့်မားသော စည်းကမ်းရှိမှု</strong>တို့ဖြင့် လူသိများပါသည်။",
+        job1_title: "ဆောက်လုပ်ရေးလုပ်သား — DMJC ဆောက်လုပ်ရေးကုမ္ပဏီ",
+        job1_meta: "၂၀၂၅ – ယခုအထိ",
+        job1_b1: "ယေဘုယျဆောက်လုပ်ရေးလုပ်ငန်းများ ဆောင်ရွက်သည်",
+        job1_b2: "မြှောက်ယူခြင်းလုပ်ငန်းများတွင် ကူညီသည်",
+        job1_b3: "နံရံဆေးသုတ်ခြင်းနှင့် အချောထည်",
+        job1_b4: "လုပ်ငန်းခွင်လုပ်ဆောင်ချက်များကို ပံ့ပိုးသည်",
+        job2_title: "ဂိုဒေါင်လျှပ်စစ်အကူ",
+        job2_meta: "၂၀၂၄ – ၂၀၂၄",
+        job2_b1: "လျှပ်စစ်တပ်ဆင်မှုတွင် ကူညီသည်",
+        job2_b2: "ကိရိယာများနှင့် ပစ္စည်းများ ပြင်ဆင်သည်",
+        job3_title: "အစိုးရဝန်ထမ်း — သစ်တောဌာန",
+        job3_meta: "၂၀၁၈ – ၂၀၂၀",
+        job3_b1: "ကွင်းဆင်းလုပ်ငန်းများ",
+        job3_b2: "ပတ်ဝန်းကျင်ထိန်းသိမ်းရေး",
+        job4_title: "ကြီးကြပ်ရေးမှူး — ဆောက်လုပ်ရေး",
+        job4_meta: "၂၀၁၅ – ၂၀၁၇",
+        job4_b1: "လုပ်သားများကိုကြီးကြပ်သည်",
+        job4_b2: "လုပ်ငန်းတာဝန်များ တာဝန်ပေးသည်",
+        job5_title: "လျှပ်စစ်ဆိုင်အရောင်းအကူ — လွိုင်ကော်",
+        job5_meta: "၂၀၁၃ – ၂၀၁၅",
+        job5_b1: "ဖောက်သည်ဝန်ဆောင်မှု",
+        job5_b2: "ထုတ်ကုန်အကြံပြုချက်များ",
+        edu1_title: "ရူပဗေဒအထူးပြု — လွိုင်ကော်တက္ကသိုလ်",
+        edu1_meta: "၂၀၁၄ – ၂၀၁၈",
+        edu2_title: "Lifting လက်မှတ် — စင်ကာပူ",
+        edu2_meta: "ထောက်ခံချက်ရရှိပြီး",
+        card_languages: "ဘာသာစကားများ",
+        lang_burmese: "မြန်မာဘာသာ",
+        lang_english: "အင်္ဂလိပ်ဘာသာ",
+        lang_chinese: "တရုတ်ဘာသာ",
+        lang_fluent: "ကျွမ်းကျင်",
+        lang_basic: "အခြေခံ",
+        card_personal: "ကိုယ်ရေးအချက်အလက်",
+        pd_nationality: "နိုင်ငံသား",
+        pd_myanmar: "မြန်မာ",
+        pd_dob: "မွေးနေ့",
+        pd_marital: "အိမ်ထောင်ရေး",
+        pd_single: "လူပျို",
+        thanks_title: "လာရောက်လည်ပတ်သည့်အတွက် ကျေးဇူးတင်ပါသည်!",
+        thanks_text: "ကျွန်ုပ်ထံ ဆက်သွယ်မှုကို ရရှိလိုပါသည်။ အလုပ်အခွင့်အလမ်းရှိသည်ဖြစ်စေ၊ နှုတ်ဆက်ချင်သည်ဖြစ်စေ လွတ်လပ်စွာ ဆက်သွယ်ပါ။",
+        btn_touch: "ဆက်သွယ်ရန်"
+      }
+    };
+
+    function setLanguage(lang) {
+      const dict = translations[lang];
+      if (!dict) return;
+      document.documentElement.lang = lang;
+      document.body.dataset.lang = lang;
+
+      document.querySelectorAll('[data-i18n]').forEach((el) => {
+        const key = el.dataset.i18n;
+        if (dict[key]) el.textContent = dict[key];
+      });
+      document.querySelectorAll('[data-i18n-html]').forEach((el) => {
+        const key = el.dataset.i18nHtml;
+        if (dict[key]) el.innerHTML = dict[key];
+      });
+
+      document.querySelectorAll('.lang-btn').forEach((btn) => {
+        btn.classList.toggle('active', btn.dataset.langBtn === lang);
+      });
+
+      try { localStorage.setItem('lang', lang); } catch (e) {}
+    }
+
+    document.querySelectorAll('.lang-btn').forEach((btn) => {
+      btn.addEventListener('click', () => setLanguage(btn.dataset.langBtn));
+    });
+
+    // Restore saved language or default to English
+    const savedLang = (() => { try { return localStorage.getItem('lang'); } catch (e) { return null; } })();
+    if (savedLang && translations[savedLang]) setLanguage(savedLang);
   </script>
 </body>
 </html>
